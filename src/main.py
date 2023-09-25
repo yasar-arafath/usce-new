@@ -268,7 +268,7 @@ def epoch_time(start_time, end_time):
     return elapsed_mins, elapsed_secs
 
 
-N_EPOCHS = 40
+N_EPOCHS = 2
 
 best_f1 = [-1, -1]
 for epoch in range(N_EPOCHS):
