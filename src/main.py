@@ -74,22 +74,7 @@ train_data, test_data = data.TabularDataset.splits(
                                         format = 'tsv',
                                         fields = fields,
                                         skip_header = True)
-
-# Reduce the size of the training dataset
-fraction = 0.5  # Fraction of the data to keep
-num_samples = 1000  # Number of samples to keep
-
-if fraction is not None:
-    # Randomly sample a fraction of the data
-    random.shuffle(train_data.examples)
-    num_samples = int(len(train_data) * fraction)
-    train_data.examples = train_data.examples[:num_samples]
-elif num_samples is not None:
-    # Keep a specific number of samples
-    train_data.examples = train_data.examples[:num_samples]
-
 train_data, valid_data = train_data.split(random_state=random.seed(SEED))
-
 print('Data loading complete')
 print(f"Number of training examples: {len(train_data)}")
 print(f"Number of validation examples: {len(valid_data)}")
@@ -204,7 +189,6 @@ def categorical_accuracy(preds, y):
 
     f1 = f1_score(y.detach().cpu().numpy(), predictions.detach().cpu().numpy(), average='macro')
     metric = torch.FloatTensor([count0 / true_correct[0], count1 / true_correct[1], count2 / true_correct[2], f1])
-
     return correct.sum() / torch.FloatTensor([y.shape[0]]), metric, confusion_matrix(y.detach().cpu().numpy(), max_preds.detach().cpu().numpy())
 
 
@@ -284,7 +268,7 @@ def epoch_time(start_time, end_time):
     return elapsed_mins, elapsed_secs
 
 
-N_EPOCHS = 2
+N_EPOCHS = 40
 
 best_f1 = [-1, -1]
 for epoch in range(N_EPOCHS):
