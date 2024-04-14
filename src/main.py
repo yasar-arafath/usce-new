@@ -368,5 +368,3 @@ def ensemble_write_to_file(models, test_iterator):
     file.close()
 
 valid_loss, valid_acc, tot, confusion_mat = ensemble_evaluate(models, test_iterator, criterion)
-print(f'\t Val. Loss: {valid_loss:.3f} |  Val. Acc: {valid_acc*100:.2f}%')
-print(tot)
